@@ -1,38 +1,129 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica;
+  font-weight: 400;
+  /* background-color: black; */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ----------------------------------------------- */
+/* LOGIN*/
+/* ----------------------------------------------- */
+.Login { 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 20px;
   color: white;
+  background-color: black;
+  height: 100vh;
+
 }
 
-.App-link {
-  color: #61dafb;
+.login-form{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+line-height: 21px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.textbox1 {
+  width: 255px;
+  height: 38px;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-bottom: 20px;
 }
+.textbox2 {
+  width: 255px;
+  height: 38px;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.login-btn {
+  width: 255px;
+  height: 48px;
+  border-radius: 5px;
+  background: #C4C4C4;
+  font-size: 18px;
+  /* margin-top: 20px; */
+  margin-bottom: 12px;
+}
+
+/* ----------------------------------------------- */
+/* HOME*/
+/* ----------------------------------------------- */
+
+
+.Home{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* align-items: center; */
+  /* justify-items: center; */
+  height: 91vh;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  background-color: white;
+}
+
+.profile-container{
+  display: flex;
+  /* margin: auto; */
+}
+
+.dot {
+  height: 94px;
+  width: 100px;
+  background-color: #c4c4c4;
+  border-radius: 50%;
+  margin-left: 18px;
+  margin-top: 21.5px;
+  margin-bottom: 15px;
+}
+
+.profile-info{
+  display: flex;
+  flex-direction: column;
+  margin-left: 21px;
+  margin-top: 28.5px;
+
+}
+.profile-info1{
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 32px;
+}
+.profile-info2{
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.events-container{
+  height: 559px;
+
+}
+.home-navbar {
+  display: flex;
+  height: 48px;
+  background: #E6E6E6;
+  margin: 0;
+ /* justify-self: flex-end;
+ justify-items: flex-end; */
+
+}
+.nav-button{
+  border: none;
+  width: 50%;
+}
+
+
