@@ -8,3 +8,326 @@
   [1m[35m (51.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "backend_test"[0m
   [1m[35m (134.7ms)[0m  [1m[35mCREATE DATABASE "backend_development" ENCODING = 'unicode'[0m
   [1m[35m (139.7ms)[0m  [1m[35mCREATE DATABASE "backend_test" ENCODING = 'unicode'[0m
+  [1m[35m (32.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateEvents (20200723161128)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (31.9ms)[0m  [1m[35mCREATE TABLE "events" ("id" bigserial primary key, "name" character varying, "img" character varying, "date" character varying, "desc" character varying, "address" character varying, "city" character varying, "state" character varying, "zipcode" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (2.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723161128"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateUsers (20200723161752)
+  [1m[35m (6.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (19.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723161752"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-07-23 16:18:07.364998"], ["updated_at", "2020-07-23 16:18:07.364998"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAttendances (20200723162614)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (32.1ms)[0m  [1m[35mCREATE TABLE "attendances" ("id" bigserial primary key, "events_id" bigint NOT NULL, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_e9adf08003"
+FOREIGN KEY ("events_id")
+  REFERENCES "events" ("id")
+, CONSTRAINT "fk_rails_77ad02f5c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_attendances_on_events_id" ON "attendances"  ("events_id")[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE  INDEX  "index_attendances_on_user_id" ON "attendances"  ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723162614"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateProfiles (20200723164529)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (29.8ms)[0m  [1m[35mCREATE TABLE "profiles" ("id" bigserial primary key, "name" character varying, "email" character varying, "addressimg" character varying, "license" character varying, "address" character varying, "city" character varying, "state" character varying, "zipcode" character varying, "phone" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723164529"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAttendances (20200723165727)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (25.0ms)[0m  [1m[35mCREATE TABLE "attendances" ("id" bigserial primary key, "profile_id" bigint NOT NULL, "event_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_099b1d53e0"
+FOREIGN KEY ("profile_id")
+  REFERENCES "profiles" ("id")
+, CONSTRAINT "fk_rails_777eb7170a"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAttendances (20200723165727)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "attendances" ("id" bigserial primary key, "profile_id" bigint NOT NULL, "event_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_099b1d53e0"
+FOREIGN KEY ("profile_id")
+  REFERENCES "profiles" ("id")
+, CONSTRAINT "fk_rails_777eb7170a"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateProfiles (20200723164529)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (27.6ms)[0m  [1m[35mDROP TABLE "profiles"[0m
+  [1m[36mprimary::SchemaMigration Destroy (0.6ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = $1[0m  [["version", "20200723164529"]]
+  [1m[35m (14.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateProfiles (20200723164529)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (7.1ms)[0m  [1m[35mCREATE TABLE "profiles" ("id" bigserial primary key, "name" character varying, "email" character varying, "addressimg" character varying, "license" character varying, "address" character varying, "city" character varying, "state" character varying, "zipcode" character varying, "phone" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723164529"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAttendances (20200723165727)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "attendances" ("id" bigserial primary key, "profile_id" bigint NOT NULL, "event_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_099b1d53e0"
+FOREIGN KEY ("profile_id")
+  REFERENCES "profiles" ("id")
+, CONSTRAINT "fk_rails_777eb7170a"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateAttendances (20200723165727)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "attendances" ("id" bigserial primary key, "profile_id" bigint NOT NULL, "event_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_099b1d53e0"
+FOREIGN KEY ("profile_id")
+  REFERENCES "profiles" ("id")
+, CONSTRAINT "fk_rails_777eb7170a"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (6.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateOutings (20200723170632)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (26.1ms)[0m  [1m[35mCREATE TABLE "outings" ("id" bigserial primary key, "profile_id" bigint NOT NULL, "event_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_ba6de5550d"
+FOREIGN KEY ("profile_id")
+  REFERENCES "profiles" ("id")
+, CONSTRAINT "fk_rails_d053c37019"
+FOREIGN KEY ("event_id")
+  REFERENCES "events" ("id")
+)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE  INDEX  "index_outings_on_profile_id" ON "outings"  ("profile_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_outings_on_event_id" ON "outings"  ("event_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723170632"]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DropTable (20200723172425)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723172425"]]
+  [1m[35m (6.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddImgToProfiles (20200723172706)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mprimary::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200723172706"]]
+  [1m[35m (5.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(5073945470573576205)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (7.0ms)[0m  [1m[32mINSERT INTO "events" ("name", "date", "desc", "address", "city", "state", "zipcode", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "NYCC"], ["date", "2020-10-04"], ["desc", "showcase your killer cosplay and meet some celebs."], ["address", "429 11th avenue"], ["city", "New York"], ["state", "NY"], ["zipcode", "10001"], ["created_at", "2020-07-23 17:42:23.137860"], ["updated_at", "2020-07-23 17:42:23.137860"]]
+  [1m[35m (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mEvent Create (0.3ms)[0m  [1m[32mINSERT INTO "events" ("name", "date", "desc", "address", "city", "state", "zipcode", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "SDCC"], ["date", "2020-09-06"], ["desc", "showcase your killer cosplay and meet some celebs."], ["address", "111 W Harbor Dr"], ["city", "San Diego"], ["state", "CA"], ["zipcode", "92101"], ["created_at", "2020-07-23 17:42:23.151426"], ["updated_at", "2020-07-23 17:42:23.151426"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (6.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.174832"], ["updated_at", "2020-07-23 17:42:23.174832"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.186068"], ["updated_at", "2020-07-23 17:42:23.186068"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.191035"], ["updated_at", "2020-07-23 17:42:23.191035"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.195631"], ["updated_at", "2020-07-23 17:42:23.195631"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.200390"], ["updated_at", "2020-07-23 17:42:23.200390"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.204999"], ["updated_at", "2020-07-23 17:42:23.204999"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.209586"], ["updated_at", "2020-07-23 17:42:23.209586"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.214489"], ["updated_at", "2020-07-23 17:42:23.214489"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.230309"], ["updated_at", "2020-07-23 17:42:23.230309"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.235809"], ["updated_at", "2020-07-23 17:42:23.235809"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.241319"], ["updated_at", "2020-07-23 17:42:23.241319"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.247077"], ["updated_at", "2020-07-23 17:42:23.247077"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.252186"], ["updated_at", "2020-07-23 17:42:23.252186"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.256828"], ["updated_at", "2020-07-23 17:42:23.256828"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.261498"], ["updated_at", "2020-07-23 17:42:23.261498"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.5ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.266591"], ["updated_at", "2020-07-23 17:42:23.266591"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.5ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.272137"], ["updated_at", "2020-07-23 17:42:23.272137"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.277801"], ["updated_at", "2020-07-23 17:42:23.277801"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.282551"], ["updated_at", "2020-07-23 17:42:23.282551"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.287615"], ["updated_at", "2020-07-23 17:42:23.287615"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.293215"], ["updated_at", "2020-07-23 17:42:23.293215"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.299097"], ["updated_at", "2020-07-23 17:42:23.299097"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.314014"], ["updated_at", "2020-07-23 17:42:23.314014"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.318919"], ["updated_at", "2020-07-23 17:42:23.318919"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.323643"], ["updated_at", "2020-07-23 17:42:23.323643"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.328553"], ["updated_at", "2020-07-23 17:42:23.328553"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.333139"], ["updated_at", "2020-07-23 17:42:23.333139"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.337705"], ["updated_at", "2020-07-23 17:42:23.337705"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.342873"], ["updated_at", "2020-07-23 17:42:23.342873"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.348626"], ["updated_at", "2020-07-23 17:42:23.348626"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.353822"], ["updated_at", "2020-07-23 17:42:23.353822"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.358589"], ["updated_at", "2020-07-23 17:42:23.358589"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.363000"], ["updated_at", "2020-07-23 17:42:23.363000"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.367401"], ["updated_at", "2020-07-23 17:42:23.367401"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.371973"], ["updated_at", "2020-07-23 17:42:23.371973"]]
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.379052"], ["updated_at", "2020-07-23 17:42:23.379052"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.390964"], ["updated_at", "2020-07-23 17:42:23.390964"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.396366"], ["updated_at", "2020-07-23 17:42:23.396366"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.402043"], ["updated_at", "2020-07-23 17:42:23.402043"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.407019"], ["updated_at", "2020-07-23 17:42:23.407019"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.411681"], ["updated_at", "2020-07-23 17:42:23.411681"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.417028"], ["updated_at", "2020-07-23 17:42:23.417028"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.3ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "James"], ["email", "email@email.com"], ["address", "122 12th street"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.421965"], ["updated_at", "2020-07-23 17:42:23.421965"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Ispita"], ["email", "email@email.com"], ["address", "111 main avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.426702"], ["updated_at", "2020-07-23 17:42:23.426702"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mProfile Create (0.4ms)[0m  [1m[32mINSERT INTO "profiles" ("name", "email", "address", "city", "state", "zipcode", "phone", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["name", "Taylor"], ["email", "email@email.com"], ["address", "133 first avenue"], ["city", "New York"], ["state", "New York"], ["zipcode", "10001"], ["phone", "555-555-555"], ["created_at", "2020-07-23 17:42:23.431875"], ["updated_at", "2020-07-23 17:42:23.431875"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for ::1 at 2020-07-23 13:42:36 -0400
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Library/Ruby/Gems/2.6.0/gems/railties-6.0.3.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Library/Ruby/Gems/2.6.0/gems/railties-6.0.3.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 12.2ms | Allocations: 478)
+Completed 200 OK in 34ms (Views: 24.9ms | ActiveRecord: 0.0ms | Allocations: 2618)
+
+
+Started GET "/profiles" for ::1 at 2020-07-23 13:42:44 -0400
+Processing by ProfilesController#index as HTML
+  [1m[36mProfile Load (2.1ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles"[0m
+  ↳ app/controllers/profiles_controller.rb:8:in `index'
+Completed 200 OK in 88ms (Views: 53.5ms | ActiveRecord: 15.3ms | Allocations: 18878)
+
+
+Started GET "/events" for ::1 at 2020-07-23 13:42:56 -0400
+Processing by EventsController#index as HTML
+  [1m[36mEvent Load (0.7ms)[0m  [1m[34mSELECT "events".* FROM "events"[0m
+  ↳ app/controllers/events_controller.rb:8:in `index'
+Completed 200 OK in 24ms (Views: 18.4ms | ActiveRecord: 3.5ms | Allocations: 8674)
+
+
+Started GET "/outings" for ::1 at 2020-07-23 13:43:14 -0400
+Processing by OutingsController#index as HTML
+  [1m[36mOuting Load (19.9ms)[0m  [1m[34mSELECT "outings".* FROM "outings"[0m
+  ↳ app/controllers/outings_controller.rb:8:in `index'
+Completed 200 OK in 34ms (Views: 5.0ms | ActiveRecord: 22.7ms | Allocations: 2161)
+
+
