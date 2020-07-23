@@ -21,7 +21,7 @@ const Login = () => {
 
             </form>
 
-            <button className="login-btn" variant="btn btn-success" onClick={() => history.replace('/Home')}>SUBMIT</button>
+            <NavLink exact path to='/Home'><button className="login-btn" variant="btn btn-success">SUBMIT</button></NavLink>
             <button className="login-btn" variant="btn btn-success" onClick={() => history.push('/Home')}>SIGN UP WITH CODE</button>
 
         </div>
