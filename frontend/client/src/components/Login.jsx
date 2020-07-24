@@ -22,7 +22,7 @@ const Login = () => {
             </form>
 
             <NavLink exact path to='/Home'><button className="login-btn" variant="btn btn-success">SUBMIT</button></NavLink>
-            <button className="login-btn" variant="btn btn-success" onClick={() => history.push('/Home')}>SIGN UP WITH CODE</button>
+          <NavLink exact path to='/Home'>  <button className="login-btn" >SIGN UP WITH CODE</button> </NavLink> 
 
         </div>
     )
