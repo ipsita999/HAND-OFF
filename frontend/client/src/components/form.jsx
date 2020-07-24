@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 import React from 'react'
 
 const form = (props) => {
@@ -18,4 +17,3 @@ const form = (props) => {
 	)
 }
 export default form;
->>>>>>> 61c9081f527ae05b37120549de389ce9e20f2b1e
