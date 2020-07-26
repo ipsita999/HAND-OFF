@@ -21,7 +21,9 @@
   height: 100vh;
 
 }
-
+.logo {
+  margin-bottom: 10px;
+}
 .login-form{
   text-align: center;
   display: flex;
@@ -107,10 +109,65 @@ line-height: 21px;
   font-size: 16px;
   line-height: 18px;
 }
+.profile-info3{
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 32px;
+  color: red;
+  margin-bottom: 8px;
+
+}
+.profile-info4{
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  color: white;
+}
 
 .events-container{
   height: 559px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 16px;
 
+}
+.event-container{
+  display: flex;
+  flex-direction: row; 
+  overflow: hidden;
+  /* background-color: black; */
+}
+.rend{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  /* overflow: hidden; */
+  
+}
+.event-box{
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  align-items: center;
+  text-align: center;
+  margin: 5px;
+
+
+}
+.event-pic{
+  height: 90px;
+  width:  140px;
+  margin-bottom:3px;
+}
+.event-btn{
+  padding: 5px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin: 3px;
 }
 .home-navbar {
   display: flex;
@@ -126,4 +183,112 @@ line-height: 21px;
   width: 50%;
 }
 
+
+.form{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  /* align-items: center; */
+  /* justify-items: center; */
+  height: 91vh;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  background-color: black;
+  color: white;
+
+}
+
+.form-content{
+  display: flex;
+  flex-direction: column;
+  /* text-align: center; */
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+line-height: 21px;
+margin-top: 25px;
+}
+
+.ticketformbtn{
+  width: 230px;
+  height: 35px;
+  border-radius: 8px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  padding: 5px;
+
+}
+.submit-button{
+  width: 230px;
+  height: 48px;
+  border-radius: 8px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  background-color: red;
+  color: white;
+  font-weight: bolder;
+  border: none;
+
+}
+.submit-button2{
+  width: 230px;
+  height: 48px;
+  border-radius: 8px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  background-color: black;
+  color: white;
+  font-weight: bolder;
+  border: none;
+
+}
+
+.client-card{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: #C4C4C4;
+  justify-content: space-evenly;
+  width: 320px;
+  height: 250px;
+  margin: 20px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: larger;
+  padding: 10px;
+  
+
+}
+
+.client-container{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  /* color: red; */
+  height: 559px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* overflow: hidden; */
+  padding: 16px;
+
+}
+
+.line {
+  color: white;
+  margin-bottom: 10px;
+  width: 100vw;
+}
+
+
+p3 {
+  color: red; 
+  font-size: 30px;
+ 
+}
 

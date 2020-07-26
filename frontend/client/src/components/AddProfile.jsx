@@ -1,20 +1,19 @@
 import React from 'react'
 import { api } from '../services/ApiConfig'
+import { Route, NavLink, Switch } from 'react-router-dom'
+
 
 export default class AddProfile extends React.Component {
     constructor() {
         super()
         this.state = {
-           img:'',
            name: '',
            email:'' ,
-           name: '',
-           license: '',
            address: '',
            city: '',
            state: '',
            zipcode: '',
-           phone: '',
+           phone: ''
     
         }
     }
@@ -27,7 +26,6 @@ export default class AddProfile extends React.Component {
     onSubmit = async(e) => {
         // e.preventDefault()
         await api.post('/profiles', {
-            img:this.state.img,
             name:this.state.name,
             email:this.state.email,
             license: this.state.license,
@@ -43,65 +41,69 @@ export default class AddProfile extends React.Component {
         return (
             <div className='form'>
             <div className='form-title'>
-            <h1>Information</h1>
+            <h1>Personal Information</h1>
             </div>  
             <div className='form-content'>  
                 <form onSubmit={this.onSubmit}>
-                    <input 
-                        type="text" 
-                        name="img" 
-                        placeholder='image'
-                        value={this.state.img}
-                        onChange={(e) => this.onChange(e)} />
-                    <input 
+                  
+                 <label> NAME
+                      <input className ="ticketformbtn"
                         type="text"
                         name="name"
                         placeholder='name'
                         value={this.state.name}
-                        onChange={(e) => this.onChange(e)} />
-                    <input 
+                        onChange={(e) => this.onChange(e)} /> 
+                        </label> 
+                        <label>EMAIL
+                    <input className ="ticketformbtn"
                         type="text" 
                         value={this.state.email} 
                         placeholder='email'
                         name="email" 
                         onChange={(e) => this.onChange(e)} />
-                    <input 
-                        type="text" 
-                        value={this.state.license} 
-                        placeholder='license'
-                        name="license" 
-                        onChange={(e) => this.onChange(e)} />  
-                    <input 
+                        </label>
+                        <label>ADDRESS
+                    <input className ="ticketformbtn"
                         type="text" 
                         value={this.state.address} 
                         placeholder='address'
                         name="address" 
                         onChange={(e) => this.onChange(e)} /> 
-                    <input 
+                        </label>
+                        <label>CITY
+                    <input className ="ticketformbtn"
                         type="text" 
                         value={this.state.city} 
                         placeholder='city'
                         name="city" 
                         onChange={(e) => this.onChange(e)} /> 
-                    <input 
+                        </label>
+                        <label>STATE
+                    <input className ="ticketformbtn"
                         type="text" 
                         value={this.state.state} 
                         placeholder='state'
                         name="state" 
                         onChange={(e) => this.onChange(e)} /> 
-                    <input 
+                        </label>
+                        <label> ZIPCODE
+                    <input className ="ticketformbtn"
                         type="text" 
                         value={this.state.zipcode} 
                         placeholder='zipcode'
                         name="zipcode" 
                         onChange={(e) => this.onChange(e)} /> 
-                    <input 
+                        </label>
+                        <label> PHONE
+                    <input className ="ticketformbtn"
                         type="text" 
                         value={this.state.phone} 
                         placeholder='phone'
                         name="phone" 
                         onChange={(e) => this.onChange(e)} /> 
-                    <button type="submit" value="Add" className='submit-button'>Add</button>
+                        </label>
+                        <button  type="submit" value="Add" className='submit-button'>BUY TICKET</button>
+                        <NavLink exact path to='/clientprofiles'><button  type="" value="Add" className='submit-button2'>Client Interface</button></NavLink>
                 </form>
                 </div>
             </div>

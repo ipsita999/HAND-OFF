@@ -52,13 +52,13 @@ class Home extends React.Component{
         <div className ="profile-container">
         <span class="dot"></span>
         <div className="profile-info">
-          <h1 className="profile-info1"> Hi OLIVIA!</h1>
+          <h1 className="profile-info1">OLIVIA</h1>
           <h1 className="profile-info2">GOing Since 2017</h1>
         </div>
         </div>
         <hr/>
         <div className="events-container">
-          <h3>ACCEPT INVITATION</h3>
+          <h3>Accept Invitation</h3>
           <div className ="event-container">
             <div className = "event-box"> 
             <img className ="event-pic" src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"></img>
@@ -67,7 +67,7 @@ class Home extends React.Component{
             </div>
           </div>
           
-          <h3>UPCOMING EVENTS</h3>
+          <h3>Upcoming Events</h3>
         <div className ="rend">{this.renderEvents()}</div>
         </div>
         <div className="home-navbar">
@@ -82,5 +82,5 @@ class Home extends React.Component{
   }
 }
 
-export default Home
+export default Event
 
